@@ -2,7 +2,11 @@ module github.com/lucas-deschamps/marketing-bot
 
 go 1.21.5
 
-require github.com/gofiber/fiber/v2 v2.51.0
+require (
+	github.com/dchest/uniuri v1.2.0
+	github.com/gofiber/fiber/v2 v2.51.0
+	github.com/joho/godotenv v1.5.1
+)
 
 require (
 	github.com/andybalholm/brotli v1.0.6 // indirect
