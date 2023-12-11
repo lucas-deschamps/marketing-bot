@@ -35,21 +35,21 @@ func (s *webhookService) ProcessMessage(c *fiber.Ctx) error {
 	var bot Chatbot = chatbot.New()
 
 	if response := s.VerifyUserInteraction(action, parameters); response != nil {
-		fmt.Println("responseeee: ", response)
-
-		botResponse := bot.Payload(response)
-
-		return c.JSON(botResponse)
+		return c.JSON(response)
 	} else {
 		msg := bot.Message("Sorry, I didn't understand what you said.")
 		return c.JSON(msg)
 	}
 }
 
-func (s *webhookService) VerifyUserInteraction(action string, parameter Parameters) any {
+func (s *webhookService) VerifyUserInteraction(action string, parameters Parameters) any {
 	switch action {
 	case "welcome_name":
-		return CouponService(parameter)
+		return CouponOffer(parameters)
+	case "coupon_yes":
+		return CouponYes(parameters)
+	case "coupon_no":
+		return CouponNo(parameters)
 	}
 
 	return nil

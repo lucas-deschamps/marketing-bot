@@ -6,7 +6,7 @@ import (
 	"github.com/lucas-deschamps/marketing-bot/internal/model"
 )
 
-func CouponService(parameters model.Parameters) model.SuggestionButton {
+func CouponOffer(parameters model.Parameters) model.SuggestionButton {
 	customerName := parameters.Name
 
 	msg := fmt.Sprintf("It's a pleasure to meet you, %s. Are you interested in our coupon promotion?", customerName)
@@ -17,11 +17,11 @@ func CouponService(parameters model.Parameters) model.SuggestionButton {
 			TemplateID:  "6",
 			Payload: []model.Payload{
 				{
-					Message: "Yes, I'd like to!",
+					Message: "Yes, I'm interested!",
 					Title:   "Yes! Show me the coupon",
 				},
 				{
-					Message: "No, I'm not interested.",
+					Message: "No, thanks, I'm not interested.",
 					Title:   "No, thanks",
 				},
 			},
@@ -30,7 +30,46 @@ func CouponService(parameters model.Parameters) model.SuggestionButton {
 		Platform: "kommunicate",
 	}
 
-	fmt.Println(couponMessage)
-
 	return couponMessage
+}
+
+func CouponYes(parameters model.Parameters) model.RichResponseCard {
+	couponLinkMsg := model.RichResponseCard{
+		FulfillmentMessages: []model.FulfillmentMessageCard{
+			{
+				Card: model.Card{
+					Title:    "Here is our unique promotional coupon!",
+					Subtitle: " 10% off. Limit 1 per customer.",
+					ImageURI: "",
+					Buttons: []model.Button{
+						{
+							Text:     "Reveal Coupon",
+							Postback: "https://www.google.com",
+						},
+					},
+				},
+			},
+		},
+	}
+
+	return couponLinkMsg
+}
+
+func CouponNo(parameters model.Parameters) model.RichResponseCard {
+	goodbyeMsg := fmt.Sprintf("No worries! Have a nice day!")
+
+	couponRefusalCard := model.RichResponseCard{
+		FulfillmentMessages: []model.FulfillmentMessageCard{
+			{
+				Card: model.Card{
+					Title:    "See you!",
+					Subtitle: goodbyeMsg,
+					ImageURI: "https://i.imgur.com/82p9aPV.jpeg",
+					Buttons:  []model.Button{},
+				},
+			},
+		},
+	}
+
+	return couponRefusalCard
 }

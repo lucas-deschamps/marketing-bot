@@ -45,9 +45,13 @@ type DialogFlowRequest struct {
 	Session string `json:"session,omitempty"`
 }
 
-// A RichResponse card which contains a button, an image, and text.
-type RichResponse struct {
-	FulfillmentMessages []FulfillmentMessages `json:"fulfillmentMessages,omitempty"`
+// A rich response card which contains a button, an image, and text.
+type RichResponseCard struct {
+	FulfillmentMessages []FulfillmentMessageCard `json:"fulfillmentMessages,omitempty"`
+}
+
+type RichResponseButton struct {
+	FulfillmentMessages []Button `json:"fulfillmentMessages,omitempty"`
 }
 
 type Button struct {
@@ -62,7 +66,7 @@ type Card struct {
 	Buttons  []Button `json:"buttons,omitempty"`
 }
 
-type FulfillmentMessages struct {
+type FulfillmentMessageCard struct {
 	Card Card `json:"card,omitempty"`
 }
 
