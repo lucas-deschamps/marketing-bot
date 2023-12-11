@@ -8,11 +8,14 @@ func New() *chatbot {
 	return &chatbot{}
 }
 
-func (c *chatbot) Message(text string, payload JSON) ChatbotResponse {
-	response := ChatbotResponse{
-		FulfillmentText: text,
-		Payload:         payload,
-	}
+func (c *chatbot) Message(text string) ChatbotResponse {
+	response := ChatbotResponse{FulfillmentText: text}
 
 	return response
+}
+
+func (c *chatbot) Payload(payload any) JSON {
+	payloadObj := JSON{"payload": payload}
+
+	return payloadObj
 }

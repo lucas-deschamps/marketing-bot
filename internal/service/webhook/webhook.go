@@ -2,11 +2,13 @@ package webhook
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/gofiber/fiber/v2"
 
 	. "github.com/lucas-deschamps/marketing-bot/internal/model"
+	. "github.com/lucas-deschamps/marketing-bot/internal/service/chatbot"
+
+	"github.com/lucas-deschamps/marketing-bot/internal/pkg/chatbot"
 )
 
 type webhookService struct{}
@@ -16,10 +18,6 @@ func NewService() *webhookService {
 }
 
 func (s *webhookService) ProcessMessage(c *fiber.Ctx) error {
-	var ProjectID string = os.Getenv("PROJECT_ID")
-
-	fmt.Printf("\nProjectID: %s", ProjectID)
-
 	fmt.Println(string(c.Body()))
 
 	jsonReq := new(DialogFlowRequest)
@@ -29,39 +27,30 @@ func (s *webhookService) ProcessMessage(c *fiber.Ctx) error {
 		return c.SendStatus(500)
 	}
 
-	fmt.Println(jsonReq.QueryResult.Action)
+	action := jsonReq.QueryResult.Action
+	parameters := jsonReq.QueryResult.Parameters
 
-	// var bot Chatbot = chatbot.New()
+	fmt.Println(action, parameters)
 
-	test := RichResponse{
-		FulfillmentMessages: []FulfillmentMessages{
-			FulfillmentMessages{
-				Card: Card{
-					Title:    "Test button",
-					Subtitle: "Test subtitle",
-					ImageURI: "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png",
-					Buttons: []Button{
-						Button{
-							Text:     "Buttonnnn",
-							Postback: "https://www.google.com",
-						},
-						Button{
-							Text:     "Buttonnnn2",
-							Postback: "https://www.google.com",
-						},
-					},
-				},
-			},
-		},
+	var bot Chatbot = chatbot.New()
+
+	if response := s.VerifyUserInteraction(action, parameters); response != nil {
+		fmt.Println("responseeee: ", response)
+
+		botResponse := bot.Payload(response)
+
+		return c.JSON(botResponse)
+	} else {
+		msg := bot.Message("Sorry, I didn't understand what you said.")
+		return c.JSON(msg)
+	}
+}
+
+func (s *webhookService) VerifyUserInteraction(action string, parameter Parameters) any {
+	switch action {
+	case "welcome_name":
+		return CouponService(parameter)
 	}
 
-	// fmt.Println(test)
-
-	// response := bot.Message("Webhooked")
-
-	// b, _ := json.Marshal(test)
-
-	// fmt.Println(string(b))
-
-	return c.JSON(test)
+	return nil
 }

@@ -7,16 +7,21 @@ type DialogFlowRequest struct {
 		QueryText  string `json:"queryText,omitempty"`
 		Action     string `json:"action,omitempty"`
 		Parameters struct {
-			Email string `json:"email,omitempty"`
+			Name string `json:"name,omitempty"`
 		} `json:"parameters,omitempty"`
-		AllRequiredParamsPresent bool `json:"allRequiredParamsPresent,omitempty"`
-		OutputContexts           []struct {
-			Name       string `json:"name,omitempty"`
-			Parameters struct {
-				NoInput       float64 `json:"no-input,omitempty"`
-				NoMatch       float64 `json:"no-match,omitempty"`
-				Email         string  `json:"email,omitempty"`
-				EmailOriginal string  `json:"email.original,omitempty"`
+		AllRequiredParamsPresent bool   `json:"allRequiredParamsPresent,omitempty"`
+		FulfillmentText          string `json:"fulfillmentText,omitempty"`
+		FulfillmentMessages      []struct {
+			Text struct {
+				Text []string `json:"text,omitempty"`
+			} `json:"text,omitempty"`
+		} `json:"fulfillmentMessages,omitempty"`
+		OutputContexts []struct {
+			Name          string `json:"name,omitempty"`
+			LifespanCount int    `json:"lifespanCount,omitempty"`
+			Parameters    struct {
+				Name         string `json:"name,omitempty"`
+				NameOriginal string `json:"name.original,omitempty"`
 			} `json:"parameters,omitempty"`
 		} `json:"outputContexts,omitempty"`
 		Intent struct {
@@ -28,11 +33,19 @@ type DialogFlowRequest struct {
 	} `json:"queryResult,omitempty"`
 	OriginalDetectIntentRequest struct {
 		Payload struct {
+			GroupID       string `json:"groupId,omitempty"`
+			BotID         string `json:"botId,omitempty"`
+			Attachments   []any  `json:"attachments,omitempty"`
+			KmUserLocale  string `json:"kmUserLocale,omitempty"`
+			From          string `json:"from,omitempty"`
+			ApplicationID string `json:"applicationId,omitempty"`
+			MessageSource string `json:"messageSource,omitempty"`
 		} `json:"payload,omitempty"`
 	} `json:"originalDetectIntentRequest,omitempty"`
 	Session string `json:"session,omitempty"`
 }
 
+// A RichResponse card which contains a button, an image, and text.
 type RichResponse struct {
 	FulfillmentMessages []FulfillmentMessages `json:"fulfillmentMessages,omitempty"`
 }
@@ -51,4 +64,8 @@ type Card struct {
 
 type FulfillmentMessages struct {
 	Card Card `json:"card,omitempty"`
+}
+
+type Parameters struct {
+	Name string `json:"name,omitempty"`
 }
