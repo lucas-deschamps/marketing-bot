@@ -3,7 +3,7 @@ package coupon
 import (
 	"github.com/gofiber/fiber/v2"
 
-	"github.com/lucas-deschamps/marketing-bot/internal/controller/webhook"
+	"github.com/lucas-deschamps/marketing-bot/internal/controller/coupon"
 
 	. "github.com/lucas-deschamps/marketing-bot/internal/model/controller"
 )
@@ -11,7 +11,7 @@ import (
 func SetupCouponRoutes(r fiber.Router) {
 	router := r.Group("/coupon")
 
-	var controller WebhookController = webhook.NewController()
+	var controller CouponController = coupon.NewController()
 
-	router.Post("/", controller.Send)
+	router.Get("/", controller.Get)
 }
