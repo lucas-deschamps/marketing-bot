@@ -60,13 +60,13 @@ func (s *couponService) Track(c *fiber.Ctx) error {
 
 	if status == true {
 		redeemedMsg = fmt.Sprintf(
-			"Coupon redeemed!\nSession ID: %s\nRedeemed: Yes.\nTotal coupon clicks in application: %s\n",
+			"Coupon redeemed!\nSession ID: %s\nPreviously redeemed: Yes.\nTotal coupon clicks in application: %s\n",
 			SessionID,
 			strconv.Itoa(total),
 		)
 	} else {
 		redeemedMsg = fmt.Sprintf(
-			"Coupon redeemed!\nSession ID: %s\nRedeemed: No.\nTotal coupon clicks in application: %s\n",
+			"Coupon redeemed!\nSession ID: %s\nPreviously redeemed: No.\nTotal coupon clicks in application: %s\n",
 			SessionID,
 			strconv.Itoa(total),
 		)

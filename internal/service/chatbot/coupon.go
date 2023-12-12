@@ -44,7 +44,7 @@ func CouponYes(parameters model.Parameters) model.RichResponseCard {
 					Buttons: []model.Button{
 						{
 							Text:     "Reveal Coupon",
-							Postback: "https://www.google.com",
+							Postback: "https://9415-2804-14d-5c5b-8a57-3a53-7f8d-8f07-4718.ngrok-free.app/v1/coupon",
 						},
 					},
 				},
