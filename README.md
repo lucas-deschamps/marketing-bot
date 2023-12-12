@@ -13,6 +13,7 @@
     │   └── service
     ├── pkg
     │   ├── chatbot
+    │   ├── redis
     │   └── util
     ├── routes
     │   ├── coupon
