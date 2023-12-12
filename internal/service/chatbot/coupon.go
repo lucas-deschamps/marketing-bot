@@ -38,9 +38,9 @@ func CouponYes(parameters model.Parameters) model.RichResponseCard {
 		FulfillmentMessages: []model.FulfillmentMessageCard{
 			{
 				Card: model.Card{
-					Title:    "Here is our unique promotional coupon!",
-					Subtitle: " 10% off. Limit 1 per customer.",
-					ImageURI: "",
+					Title:    "Your coupon is here!",
+					Subtitle: "10% off. Limit 1 per customer.",
+					ImageURI: "https://i.imgur.com/TSgucSK.jpeg",
 					Buttons: []model.Button{
 						{
 							Text:     "Reveal Coupon",

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 
@@ -17,6 +18,8 @@ func (s *couponService) Track(c *fiber.Ctx) error {
 
 	var redeemedMsg string
 	var status bool = false
+
+	couponCode := strings.ToUpper(CouponID)
 
 	rdb := redis.SetupRedisClient()
 
@@ -60,13 +63,15 @@ func (s *couponService) Track(c *fiber.Ctx) error {
 
 	if status == true {
 		redeemedMsg = fmt.Sprintf(
-			"Coupon redeemed!\nSession ID: %s\nPreviously redeemed: Yes.\nTotal coupon clicks in application: %s\n",
+			"Coupon redeemed! Coupon code: #%s.\nSession ID: %s\nPreviously redeemed: Yes.\nTotal coupon clicks in application: %s\n",
+			couponCode,
 			SessionID,
 			strconv.Itoa(total),
 		)
 	} else {
 		redeemedMsg = fmt.Sprintf(
-			"Coupon redeemed!\nSession ID: %s\nPreviously redeemed: No.\nTotal coupon clicks in application: %s\n",
+			"Coupon redeemed! Coupon code: #%s.\nSession ID: %s\nPreviously redeemed: No.\nTotal coupon clicks in application: %s\n",
+			couponCode,
 			SessionID,
 			strconv.Itoa(total),
 		)
