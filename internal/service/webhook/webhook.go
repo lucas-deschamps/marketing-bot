@@ -18,8 +18,6 @@ func NewService() *webhookService {
 }
 
 func (s *webhookService) ProcessMessage(c *fiber.Ctx) error {
-	fmt.Println(string(c.Body()))
-
 	jsonReq := new(DialogFlowRequest)
 
 	if err := c.BodyParser(jsonReq); err != nil {
@@ -29,8 +27,6 @@ func (s *webhookService) ProcessMessage(c *fiber.Ctx) error {
 
 	action := jsonReq.QueryResult.Action
 	parameters := jsonReq.QueryResult.Parameters
-
-	fmt.Println(action, parameters)
 
 	var bot Chatbot = chatbot.New()
 

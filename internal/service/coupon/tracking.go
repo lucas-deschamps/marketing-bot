@@ -37,7 +37,7 @@ func (s *couponService) Track(c *fiber.Ctx) error {
 
 	fmt.Println("\nCounter incremented successfully for session ID:", SessionID)
 
-	// Get the count for the session ID
+	// Gets the click count for a given session ID
 	count, ctErr := rdb.Get(ctx, fmt.Sprintf("counter:%s", SessionID)).Int()
 
 	if ctErr != nil {
@@ -47,7 +47,7 @@ func (s *couponService) Track(c *fiber.Ctx) error {
 
 	fmt.Println("Count for session ID:", SessionID, "is", count)
 
-	// Get total coupon clicks
+	// Gets total coupon clicks
 	total, err := rdb.Get(ctx, "coupon_clicks").Int()
 
 	if err != nil {
